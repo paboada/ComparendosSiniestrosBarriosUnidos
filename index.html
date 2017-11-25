@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="multiline.css">
+        <script src="http://d3js.org/d3.v3.js" charset="utf-8"></script>
+        <script src="js/multiline.js" charset="utf-8"></script>
+        <script src="js/scatterplot.js"></script>
+            <title>Comparendos-Siniestros Barrios Unidos Bogota</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Comparendos vs Siniestros Localidad "Barrios Unidos" Bogota 2014-2017</h1>
+        <p class="nota"> Para una mejor visualizacion, por favor realizar navegacion a traves de un computador de escritorio. No se encuentra customizada para smartphones.</p>
+        <div id="contenedor1">
+                <span id="cajon1">
+                    <div class="chart-wrapper" id="chart-line1">
+                        Comportamiento mensual COMPARENDOS 2014-2017
+                        <script type="text/javascript">
+                                d3.csv('data/BarriosUnidosComparendos.csv', function(error, data) {
+                                 data.forEach(function (d) {
+                                    d.Mes = +d.Mes;
+                                    d.A2015 = +d.A2015;
+                                    d.A2016 = +d.A2016;
+                                    d.A2017 = +d.A2017;
+                                    d.promedio = +d.promedio;
+                                });
+
+                                var chart = makeLineChart(data, 'Mes', {
+                                    '2015': {column: 'A2015'},
+                                    '2016': {column: 'A2016'},
+                                    '2017': {column: 'A2017'},
+                                    'promedio': {column: 'promedio'}
+                                }, {xAxis: 'Mes', yAxis: 'Comparendos'});
+                                chart.bind("#chart-line1");
+                                chart.render();
+                            });
+                        </script>
+                    </div>
+                </span>
+
+                <span id="cajon2">
+                    <div class="chart-wrapper" id="chart-line2">
+                     Comportamiento mensual SINIESTROS 2014-2017
+                        <script type="text/javascript">
+                                d3.csv('data/BarriosUnidosSiniestros.csv', function(error, data) {
+                                data.forEach(function (d) {
+                                    d.Mes = +d.Mes;
+                                    d.A2015 = +d.A2015;
+                                    d.A2016 = +d.A2016;
+                                    d.A2017 = +d.A2017;
+                                    d.promedio = +d.promedio;
+                                });
+
+                                var chart = makeLineChart(data, 'Mes', {
+                                    '2015': {column: 'A2015'},
+                                    '2016': {column: 'A2016'},
+                                    '2017': {column: 'A2017'},
+                                    'promedio': {column: 'promedio'}
+                                }, {xAxis: 'Mes', yAxis: 'Siniestros'});
+                                chart.bind("#chart-line2");
+                                chart.render();
+                            });
+                        </script>
+                        </div>            
+                </span>    
+                <span id="cajon3"> 
+                    Realizando un analisis de los datos de los ultimos 3 años, entre los meses de Enero y Septiembre, puede observarse que el numero de comparendos que se imponen en esta
+                  localidad, no es comparable con el numero de siniestros, debido que no todos los comparendos que se imponen tienen como fin evitar directamente un siniestro o accidente
+                  de transito.
+                    Dada esta condicion, ¿cómo podriamos determinar si el uso del comparendo como herramienta preventiva de un siniestro si esta funcionando?
+                              Se plantea la primera hipotesis en donde se intenta comprobar si un cambio porcentual positivo en el numero de comparendos tiene como resultado
+                        un cambio porcentual negativo en siniestros.
+                        Estos cambios se calculan por separado tomando como referencia el valor esperado de cada mes de la siguiente forma:<br>
+
+                        Promedio Comparendos Enero = (Sumatoria de Comparendos Enero2015, Enero2016,Enero2017)/3<br>
+                        Promedio Siniestros Enero = (Sumatoria de Siniestros Enero2015, Enero2016,Enero2017)/3<br>                         
+                        
+                        A partir de estos valores, se realizo una comparacion del porcentaje de cambio respecto al valor esperado en cada mes, como sigue:
+                        Valor esperado comparendos Enero = 26936
+                        Comparendos Enero2016 -  Comparendos Enero2015 = 13466
+                        Porcentaje cambio sobre el esperado = 13466/26936 = 50%
+                        Valor esperado siniestros Enero = 32
+                        Siniestros Enero2016 - Siniestros Enero2015 = 16
+                        Porcentaje cambio sobre el esperado = 16/32 = 50%
+
+                </span>
+        </div>
+        
+        <div style="clear:both;"></div>  
+        
+        <div id="contenedor2">
+            <script type="text/javascript">
+                draw_scatter();
+                draw_scatter();
+            </script>
+            <div id="cajon6">
+                El resultado de los cambios de los años 2015 a 2016 y 2016 a 2017 indican que en algunos me-<br> 
+                ses un porcentaje de aumento en los comparendos,respecto al promedio de ese mes, tiene una  <br> 
+                disminucion en el numero de siniestros.
+            </div>
+        </div>
+</html>
