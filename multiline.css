@@ -124,6 +124,7 @@
 #contenedor1{
                 position:relative; 
                 display:table;
+                 background-color: #FAF7F7;
             }
                 #cajon1{
                     position:relative;
@@ -136,7 +137,8 @@
                 #cajon3{
                     position:relative;
                     float:end; 
-                    font-size: 9pt;             
+                    font-size: 9pt;    
+                   
                 }    
                 
             #contenedor2{

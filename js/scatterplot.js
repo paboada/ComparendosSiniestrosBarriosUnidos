@@ -1,6 +1,6 @@
 /* global d3, handleMouseOver, handleMouseOut */
 
-function draw_scatter(){
+function draw_scatter(archivo){
     
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 750 - margin.left - margin.right,
@@ -25,9 +25,12 @@ var svg = d3.select("body").selectAll("#contenedor2").append("svg").attr("class"
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
- 
+
+var ruta = "data/";
+var extension = ".csv";
+var archivo_procesar = ruta.concat(archivo,extension);
    
-d3.csv("data/BarriosUnidosPorcentual.csv", function(error, data) {
+d3.csv(archivo_procesar, function(error, data) {
   if (error) throw error;
 
   data.forEach(function(d) {
@@ -43,17 +46,19 @@ d3.csv("data/BarriosUnidosPorcentual.csv", function(error, data) {
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height/2 + ")")
+       .attr("font-size", "7pt")
       .call(xAxis)
     .append("text")
       .attr("class", "label")
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
-      .text("Delta-Sin");
+      .text("%Delta-Comp");
 
   svg.append("g")
       .attr("class", "y axis")
       .attr("transform", "translate(" + width/2 + ")",0)
+       .attr("font-size", "7pt")
       .call(yAxis)
     .append("text")
       .attr("class", "label")
@@ -61,8 +66,12 @@ d3.csv("data/BarriosUnidosPorcentual.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Delta-Comp") 
+      .text("%Delta-Sin") 
 
+
+
+        
+        
   svg.selectAll(".dot")
       .data(data)
     .enter().append("circle")
@@ -77,19 +86,9 @@ d3.csv("data/BarriosUnidosPorcentual.csv", function(error, data) {
            console.log("Siniestros: " + d.Siniestros);
            console.log(d.Localidad);
            console.log(d.Mes);
-                                    d3.select("body")
-   
-                                      .selectAll(".scatter1")
-                                      .data(data)
-                                      .append("g")
-                                      .attr("class","labels_p")
-                                      .attr("x", function(d) { return x(d.Comparendos); })
-                                      .attr("y", function(d) { return y(d.Siniestros); })
-                                      .text("Delta-Comp") ;
-                              
-                                      //.attr("y", 10)
-                                        //.text(d.Mes) 
-                                    //console.log(d.)
+           
+           
+             
           
                                  })
       .on("mouseout", function(d) {
@@ -119,6 +118,27 @@ d3.csv("data/BarriosUnidosPorcentual.csv", function(error, data) {
       .style("text-anchor", "end")
       .text(function(d) { return d; });
       
+ //leyendas para circulos  
+ 
+    var legend_circles = svg.selectAll(".legend_circles")
+                       .data(data)
+                        .enter().append("g")
+                        .attr("class", "legend_circles")
+                            ;
+      
+  legend_circles.append("text")
+                .attr("x", function(d) { return x(d.Comparendos)-3; })
+                .attr("y", function(d) { return y(d.Siniestros)-5; }) 
+                .attr("font-size", "7pt")
+                .style("text-anchor", "end")
+                .text(function(d) { return "(" + d.Comparendos + ", "; }); 
+        
+  legend_circles.append("text")
+                .attr("x", function(d) { return x(d.Comparendos)+15; })
+                .attr("y", function(d) { return y(d.Siniestros)-5; }) 
+                .attr("font-size", "7pt")
+                .style("text-anchor", "end")
+                .text(function(d) { return d.Siniestros+")"; });  
 
 });
       
