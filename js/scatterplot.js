@@ -3,8 +3,8 @@
 function draw_scatter(){
     
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 500 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    width = 750 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 var x = d3.scale.linear().range([0, width]);
 
@@ -99,7 +99,7 @@ d3.csv("data/BarriosUnidosPorcentual.csv", function(error, data) {
                                  })
     ;
 
-  /*var legend = svg.selectAll(".legend")
+  var legend = svg.selectAll(".legend")
       .data(color.domain())
     .enter().append("g")
       .attr("class", "legend")
@@ -117,7 +117,7 @@ d3.csv("data/BarriosUnidosPorcentual.csv", function(error, data) {
       .attr("y", 9) 
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d; });*/
+      .text(function(d) { return d; });
       
 
 });
