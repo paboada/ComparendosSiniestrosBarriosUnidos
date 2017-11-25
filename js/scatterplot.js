@@ -90,7 +90,7 @@ d3.csv(archivo_procesar, function(error, data) {
            
           var c = d3.selectAll(".scatter1")
              .selectAll("."+elegido)
-             .attr("r",7)
+             .attr("r",20)
              .attr("opacity", "0.4")
              ;
            })
