@@ -75,7 +75,7 @@ d3.csv(archivo_procesar, function(error, data) {
   svg.selectAll(".dot")
       .data(data)
     .enter().append("circle")
-      .attr("class", "dot")
+      .attr("class", function(d) { return d.Mes; })
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d.Comparendos); })
       .attr("cy", function(d) { return y(d.Siniestros); })
@@ -84,25 +84,31 @@ d3.csv(archivo_procesar, function(error, data) {
            console.log("movimiento de mouse");
            console.log("Comparendos: " + d.Comparendos);
            console.log("Siniestros: " + d.Siniestros);
-           console.log(d.Localidad);
-           console.log(d.Mes);
+           console.log(d.Localidad);           
+           var elegido = d.Mes;
+           console.log("elegido: " + elegido);           
            
-           
-             
-          
-                                 })
+          var c = d3.selectAll(".scatter1")
+             .selectAll("."+elegido)
+             .attr("r",7)
+             .attr("opacity", "0.4")
+             ;
+           })
       .on("mouseout", function(d) {
-                                d3.select("body")
-                                    .selectAll(d.Localidad)
-                                    .attr("fill","#CCC");
-                                 })
+          var elegido = d.Mes;
+                               var c = d3.selectAll(".scatter1")
+             .selectAll("."+elegido)
+             .attr("r",3.5)
+              .attr("opacity", "1")
+        })
     ;
-
   var legend = svg.selectAll(".legend")
       .data(color.domain())
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate("+ 2 +"," + i * 19 + ")"; })
+      
+      
       ;
 
   legend.append("rect")
@@ -121,7 +127,7 @@ d3.csv(archivo_procesar, function(error, data) {
  //leyendas para circulos  
  
     var legend_circles = svg.selectAll(".legend_circles")
-                       .data(data)
+                        .data(data)
                         .enter().append("g")
                         .attr("class", "legend_circles")
                             ;
